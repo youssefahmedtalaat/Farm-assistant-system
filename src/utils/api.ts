@@ -1,5 +1,6 @@
+
 // Node.js backend API base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/make-server-a88cdc1e';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 interface ApiOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -73,7 +74,7 @@ export const authApi = {
     farmName?: string;
     role?: 'farmer' | 'admin';
   }) => {
-    const response = await apiCall<{ success: boolean; user: any; token: string }>('/signup', { method: 'POST', body: data });
+    const response = await apiCall<{ success: boolean; user: any; token: string }>('/auth/signup', { method: 'POST', body: data });
     if (response.token) {
       setAccessToken(response.token);
     }
@@ -85,46 +86,16 @@ export const authApi = {
     password: string;
     role?: 'farmer' | 'admin';
   }) => {
-    // Use direct API call to the login endpoint
-    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/make-server-a88cdc1e';
-    const response = await fetch(`${API_BASE}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    const response = await apiCall<{ success: boolean; user: any; token: string }>('/auth/login', { method: 'POST', body: data });
     
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `API Error: ${response.status}`);
+    if (response.token) {
+      setAccessToken(response.token);
     }
-    
-    const result = await response.json();
-    if (result.token) {
-      setAccessToken(result.token);
-    }
-    return result;
+    return response;
   },
   
   verify: async () => {
-    const token = getAccessToken();
-    if (!token) {
-      throw new Error('No token available');
-    }
-    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/make-server-a88cdc1e';
-    const response = await fetch(`${API_BASE}/api/auth/verify`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `API Error: ${response.status}`);
-    }
-    
-    return response.json();
+    return apiCall('/auth/verify', { requireAuth: true });
   },
 };
 
@@ -208,12 +179,7 @@ export const subscriptionApi = {
     return apiCall('/subscription', { requireAuth: true });
   },
 
-  create: async (data: {
-    planId: string;
-    planName: string;
-    price: number;
-    duration: string;
-  }) => {
+  create: async (data: any) => {
     return apiCall('/subscription', {
       method: 'POST',
       body: data,
@@ -221,10 +187,17 @@ export const subscriptionApi = {
     });
   },
 
+  update: async (data: any) => {
+    return apiCall('/subscription', {
+      method: 'PUT',
+      body: data,
+      requireAuth: true,
+    });
+  },
+  
   getAll: async () => {
     return apiCall('/subscription/all', { requireAuth: true });
   },
-
 };
 
 // ============================================
@@ -235,44 +208,88 @@ export const activitiesApi = {
   getAll: async () => {
     return apiCall('/activities', { requireAuth: true });
   },
-
-  log: async (data: { action: string; detail?: string }) => {
+  
+  log: async (action: string, detail: string) => {
     return apiCall('/activities', {
       method: 'POST',
-      body: data,
+      body: { action, detail },
       requireAuth: true,
     });
   },
 };
 
 // ============================================
-// NOTIFICATION PREFERENCES API CALLS
+// NOTIFICATIONS API CALLS
 // ============================================
 
 export const notificationsApi = {
-  get: async () => {
+  getAll: async () => {
     return apiCall('/notifications', { requireAuth: true });
   },
-
-  update: async (data: {
-    emailNotifications?: boolean;
-    pushNotifications?: boolean;
-    stockAlerts?: boolean;
-    marketUpdates?: boolean;
-    aiRecommendations?: boolean;
-  }) => {
-    return apiCall('/notifications', {
+  
+  markAsRead: async (id: string) => {
+    return apiCall(`/notifications/${id}/read`, {
       method: 'PUT',
-      body: data,
+      requireAuth: true,
+    });
+  },
+  
+  markAllAsRead: async () => {
+    return apiCall('/notifications/read-all', {
+      method: 'PUT',
+      requireAuth: true,
+    });
+  },
+  
+  getPreferences: async () => {
+    return apiCall('/notifications/preferences', { requireAuth: true });
+  },
+  
+  updatePreferences: async (preferences: any) => {
+    return apiCall('/notifications/preferences', {
+      method: 'PUT',
+      body: preferences,
       requireAuth: true,
     });
   },
 };
 
 // ============================================
-// HEALTH CHECK
+// MESSAGES API CALLS
 // ============================================
 
-export const healthCheck = async () => {
-  return apiCall('/health');
+export const messagesApi = {
+  getAll: async () => {
+    return apiCall('/messages', { requireAuth: true });
+  },
+
+  send: async (data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    subject: string;
+    message: string;
+    userId?: string;
+  }) => {
+    return apiCall('/messages', {
+      method: 'POST',
+      body: data,
+      requireAuth: false,
+    });
+  },
+
+  updateStatus: async (id: string, status: string) => {
+    return apiCall(`/messages/${id}/status`, {
+      method: 'PUT',
+      body: { status },
+      requireAuth: true,
+    });
+  },
+
+  delete: async (id: string) => {
+    return apiCall(`/messages/${id}`, {
+      method: 'DELETE',
+      requireAuth: true,
+    });
+  },
 };

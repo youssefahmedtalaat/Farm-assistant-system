@@ -26,6 +26,7 @@ import {
   Sparkles,
   PieChart,
   Trash2,
+  MessageCircle,
 } from 'lucide-react';
 import { Link, useLocation, Routes, Route } from 'react-router-dom';
 import { useAuth } from '../utils/auth';
@@ -37,6 +38,7 @@ import { cropsApi, activitiesApi, notificationsApi, subscriptionApi, profileApi 
 import { useLanguage } from '../utils/language';
 import { ExploreFarms } from './ExploreFarms';
 import { FarmersSubscriptions } from './FarmersSubscriptions';
+import { MessagesPage } from './dashboard/Messages';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 
 export function Dashboard() {
@@ -51,6 +53,7 @@ export function Dashboard() {
     ? [
         { name: t('nav.home'), icon: <Home className="w-5 h-5" />, path: '/dashboard' },
         { name: t('admin.dashboard.farmersSubscriptions'), icon: <Users className="w-5 h-5" />, path: '/dashboard/farmers-subscriptions' },
+        { name: 'Messages', icon: <MessageCircle className="w-5 h-5" />, path: '/dashboard/messages' },
         { name: t('dashboard.exploreFarms'), icon: <MapPin className="w-5 h-5" />, path: '/dashboard/explore-farms' },
         { name: t('common.notifications'), icon: <Bell className="w-5 h-5" />, path: '/dashboard/notifications' },
         { name: t('common.settings'), icon: <Settings className="w-5 h-5" />, path: '/dashboard/settings' },
@@ -170,6 +173,7 @@ export function Dashboard() {
               {!isAdmin && <Route path="subscription" element={<SubscriptionDashboard />} />}
               {!isAdmin && <Route path="crops" element={<MyCropsPage user={user} />} />}
               {isAdmin && <Route path="farmers-subscriptions" element={<FarmersSubscriptions />} />}
+              {isAdmin && <Route path="messages" element={<MessagesPage />} />}
               <Route path="explore-farms" element={<ExploreFarms withoutLayout={true} />} />
               <Route path="notifications" element={<NotificationsPage isAdmin={isAdmin} />} />
               <Route path="settings" element={<SettingsPage user={user} isAdmin={isAdmin} />} />

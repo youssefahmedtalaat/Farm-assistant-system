@@ -13,6 +13,7 @@ import {
   X,
   User,
   Languages,
+  MessageCircle,
 } from 'lucide-react';
 import { useAuth } from '../utils/auth';
 import { useLanguage } from '../utils/language';
@@ -35,6 +36,7 @@ export function DashboardLayout({ children, hideSidebar = false }: DashboardLayo
     ? [
         { name: t('nav.home'), icon: <Home className="w-5 h-5" />, path: '/dashboard' },
         { name: t('nav.profile'), icon: <User className="w-5 h-5" />, path: '/profile' },
+        { name: 'Messages', icon: <MessageCircle className="w-5 h-5" />, path: '/dashboard/messages' },
         { name: t('common.notifications'), icon: <Bell className="w-5 h-5" />, path: '/dashboard/notifications' },
         { name: t('common.settings'), icon: <Settings className="w-5 h-5" />, path: '/dashboard/settings' },
       ]

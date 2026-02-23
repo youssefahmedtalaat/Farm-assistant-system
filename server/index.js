@@ -9,6 +9,7 @@ import cropsRoutes from './routes/crops.js';
 import subscriptionRoutes from './routes/subscription.js';
 import activitiesRoutes from './routes/activities.js';
 import notificationsRoutes from './routes/notifications.js';
+import messagesRoutes from './routes/messages.js';
 import pool from './db/connection.js';
 import { generateUUID } from './db/uuid_helper.js';
 
@@ -43,6 +44,7 @@ app.use('/api/crops', cropsRoutes);
 app.use('/api/subscription', subscriptionRoutes);
 app.use('/api/activities', activitiesRoutes);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/api/messages', messagesRoutes);
 
 // Legacy route compatibility (for existing frontend)
 // Mount auth routes on legacy API path
