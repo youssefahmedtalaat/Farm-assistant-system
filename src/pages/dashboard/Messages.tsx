@@ -222,35 +222,35 @@ export function MessagesPage() {
             <Button
               variant={statusFilter === 'all' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('all')}
-              className={statusFilter === 'all' ? "bg-[#2D6A4F] hover:bg-[#2D6A4F]/90" : ""}
+              className={statusFilter === 'all' ? "bg-[#2D6A4F] hover:bg-[#2D6A4F]/90 text-white" : ""}
             >
               All
             </Button>
             <Button
               variant={statusFilter === 'new' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('new')}
-              className={statusFilter === 'new' ? "bg-blue-600 hover:bg-blue-700" : ""}
+              className={statusFilter === 'new' ? "bg-blue-600 hover:bg-blue-700 text-white" : ""}
             >
               New
             </Button>
             <Button
               variant={statusFilter === 'read' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('read')}
-              className={statusFilter === 'read' ? "bg-yellow-600 hover:bg-yellow-700" : ""}
+              className={statusFilter === 'read' ? "bg-yellow-600 hover:bg-yellow-700 text-white" : ""}
             >
               Read
             </Button>
             <Button
               variant={statusFilter === 'replied' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('replied')}
-              className={statusFilter === 'replied' ? "bg-purple-600 hover:bg-purple-700" : ""}
+              className={statusFilter === 'replied' ? "bg-purple-600 hover:bg-purple-700 text-white" : ""}
             >
               Replied
             </Button>
             <Button
               variant={statusFilter === 'resolved' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('resolved')}
-              className={statusFilter === 'resolved' ? "bg-green-600 hover:bg-green-700" : ""}
+              className={statusFilter === 'resolved' ? "bg-green-600 hover:bg-green-700 text-white" : ""}
             >
               Resolved
             </Button>
