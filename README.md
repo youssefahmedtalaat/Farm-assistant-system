@@ -63,14 +63,14 @@ A comprehensive web platform designed to empower farmers with digital tools for 
 └── supabase/           # Database migrations (optional)
 ```
 
-## � Project Documents
+## 📄 Project Documents
 
 For a detailed breakdown of the system analysis, business model, and presentation slides, please refer to the following:
 
 - [Documentation of the Graduation Project](docs/last%20edit.docx)
 - [Presentation of the Graduation Project](docs/Farmer%20Assistant%20System.pdf)
 
-## �🚀 Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js (v18 or higher)
