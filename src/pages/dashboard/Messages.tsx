@@ -222,35 +222,40 @@ export function MessagesPage() {
             <Button
               variant={statusFilter === 'all' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('all')}
-              className={statusFilter === 'all' ? "bg-[#2D6A4F] hover:bg-[#2D6A4F]/90 text-white" : ""}
+              className={statusFilter === 'all' ? "text-white" : ""}
+              style={statusFilter === 'all' ? { backgroundColor: '#2D6A4F', borderColor: '#2D6A4F', color: 'white' } : {}}
             >
               All
             </Button>
             <Button
               variant={statusFilter === 'new' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('new')}
-              className={statusFilter === 'new' ? "bg-blue-600 hover:bg-blue-700 text-white" : ""}
+              className={statusFilter === 'new' ? "text-white" : ""}
+              style={statusFilter === 'new' ? { backgroundColor: '#2563eb', borderColor: '#2563eb', color: 'white' } : {}}
             >
               New
             </Button>
             <Button
               variant={statusFilter === 'read' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('read')}
-              className={statusFilter === 'read' ? "bg-yellow-600 hover:bg-yellow-700 text-white" : ""}
+              className={statusFilter === 'read' ? "text-white" : ""}
+              style={statusFilter === 'read' ? { backgroundColor: '#ca8a04', borderColor: '#ca8a04', color: 'white' } : {}}
             >
               Read
             </Button>
             <Button
               variant={statusFilter === 'replied' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('replied')}
-              className={statusFilter === 'replied' ? "bg-purple-600 hover:bg-purple-700 text-white" : ""}
+              className={statusFilter === 'replied' ? "text-white" : ""}
+              style={statusFilter === 'replied' ? { backgroundColor: '#9333ea', borderColor: '#9333ea', color: 'white' } : {}}
             >
               Replied
             </Button>
             <Button
               variant={statusFilter === 'resolved' ? 'default' : 'outline'}
               onClick={() => setStatusFilter('resolved')}
-              className={statusFilter === 'resolved' ? "bg-green-600 hover:bg-green-700 text-white" : ""}
+              className={statusFilter === 'resolved' ? "text-white" : ""}
+              style={statusFilter === 'resolved' ? { backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' } : {}}
             >
               Resolved
             </Button>
